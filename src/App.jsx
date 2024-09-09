@@ -1,17 +1,15 @@
-import { React } from "react";
-import { ChakraProvider } from '@chakra-ui/react';
-import Navbar from "./components/Navbar/Navbar";
-import ItemListContainer from "./components/ItmelListContainer/ItemListContainer";
-
+import { ChakraProvider, Box, Spinner, Flex } from '@chakra-ui/react';
+import MainLayout from "./layout/MainLayout";
+import { MainRouter } from './routes/MainRouter';
 
 function App() {
-  
-  return(
+  return (
     <ChakraProvider>
-      <Navbar />
-      <ItemListContainer greeting={'Bienvenidos a BEfitnessUY!'}/>
+      <MainLayout>
+        <MainRouter />
+      </MainLayout>
     </ChakraProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;

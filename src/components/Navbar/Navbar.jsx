@@ -17,25 +17,44 @@ import {
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import myLogo from '../../assets/logoooo.png';
-import CartWidget from '../CartWidget/CartWidget';
+import { CartWidget } from '../CartWidget';
 import './Navbar.css';
-import { px } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useCategory } from '../../hooks/useCategory';
 
 
 
+export const Navbar = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
+    const {Categories}= useCategory();
+    
 
-const Navbar = () => {
-    const { colorMode, toggleColorMode } = useColorMode()
     return (
         <>
             <Box className='Navbar' bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-                <Flex  h={16} className='Navbar'>
-                    <img width={175} height={75} src={myLogo} alt="" />
-                    <Text>Inicio</Text>
-                    <Text>Nosotros</Text>
-                    <Text>Productos</Text>
-                    <Text>Accesorios</Text>
-                    <Text>Contacto</Text>
+                <Flex h={16} className='Navbar'>
+                    <Link to={"/"} >
+                        <img width={175} height={75} src={myLogo} alt="" />
+                    </Link>
+                    <Box width={"100%"} marginLeft={100}>
+                        <Menu>
+                            <Link to={"/"} style={{ margin: '30px' }}>Home</Link>
+                            <Link to={"/Nosotros"} style={{ margin: '30px' }}>Nosotros</Link>
+                            <Link to={"/Productos"} style={{ margin: '30px' }}>Productos</Link>
+                            <Link to={"/Accesorios"} style={{ margin: '30px' }}>Accesorios</Link>
+                            <MenuButton as={Link} cursor={"pointer"} style={{margin:30}}>Categorias</MenuButton>
+                            <MenuList height={'300px'} overflowY={'scroll'}>
+                                {Categories.map((category) => (
+                                    <MenuItem key={category.slug}>
+                                        <Link to={`/Categories/${category.name}`}>
+                                            {category.name}
+                                        </Link>
+                                    </MenuItem>
+                                ))}
+                            </MenuList>
+                            <Link style={{ margin: '30px' }}>Contacto</Link>
+                        </Menu>
+                    </Box>
 
                     <Flex alignItems={'center'}>
                         <Stack direction={'row'} spacing={7}>
@@ -82,6 +101,4 @@ const Navbar = () => {
         </>
     )
 
-}
-
-export default Navbar;
+};

@@ -1,7 +1,7 @@
 import {Center, Flex, Img, Text} from "@chakra-ui/react";
 import { BsCart } from "react-icons/bs";
 
-const CartWidget = ()=> {
+export const CartWidget = ()=> {
     return(
         <Flex alignItems={'center'}> 
             <BsCart size={25}/>
@@ -9,6 +9,5 @@ const CartWidget = ()=> {
         </Flex>
 
     )
-}
+};
 
-export default CartWidget;
