@@ -1,11 +1,11 @@
 import { Flex, Spinner, Box} from "@chakra-ui/react";
-import { useProducts } from "../hooks";
+import { useItemsCollection} from "../hooks";
 import { ItemListContainer } from "../components";
 
 
 
 export const Home = () => {
-    const {ProductsData, Loading} = useProducts();
+    const {ItemsData, Loading} = useItemsCollection("products");
     // const {ProductData} = useProductsById();
     return Loading === true ?
     (
@@ -15,7 +15,7 @@ export const Home = () => {
     ) :
     (
         <Box>
-            <ItemListContainer greeting={'Bienvenidos a BEfitnessUY!'} products={ProductsData} />
+            <ItemListContainer  products={ItemsData} />
         </Box>
     );
 };

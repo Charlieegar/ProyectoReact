@@ -2,9 +2,10 @@ import { Box, Card, Stack, CardBody, CardFooter, ButtonGroup, Button, Heading, I
 import { Link } from "react-router-dom";
 
 
-export const ItemListContainer = ({ greeting, products }) => {
+export const ItemListContainer = ({ products }) => {
     console.log(products)
-    return (
+    return (  
+        products.length === 0 ? (<Box> No hay productos para mostrar</Box>) :
         <Box display={'flex'} flexWrap={"wrap"} alignItems={"center"} justifyContent={"center"}>
             {
                 products.map((product) => {
@@ -23,7 +24,7 @@ export const ItemListContainer = ({ greeting, products }) => {
                                         {product.description}
                                     </Text>
                                     <Text color='blue.600' fontSize='2xl'>
-                                        {product.precio}
+                                        {product.price}
                                     </Text>
                                 </Stack>
                             </CardBody>

@@ -1,9 +1,11 @@
 //MainRouter ES EL ARCHIVO DONDE VAN LAS RUTAS DE NAVEGACION DE NUESTRO PROYECTO
 
 import { BrowserRouter, Routes, Route} from "react-router-dom"
-import { Category, Home, Nosotros } from "../pages"
+import { Category, Home, Nosotros, Checkout, Pago } from "../pages"
 import { Navbar } from "../components"
 import { Detalles } from "../pages/Detalles"
+
+
 
 
 
@@ -18,6 +20,8 @@ export const MainRouter = () => {
                 <Route path="/Nosotros" element={<Nosotros/>}/>
                 <Route path="/Detalles/:id" element={<Detalles/>}/>
                 <Route path="/categories/:categoryId" element={<Category/>}/>
+                <Route path="/Checkout/" element={<Checkout/>}/>
+                <Route path="/Pago" element={<Pago/>}/>
             </Routes>
         </BrowserRouter>
             

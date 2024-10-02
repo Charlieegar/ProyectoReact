@@ -20,14 +20,15 @@ import myLogo from '../../assets/logoooo.png';
 import { CartWidget } from '../CartWidget';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
-import { useCategory } from '../../hooks/useCategory';
+import { useItemsCollection } from '../../hooks';
+import { createProductsFirestore } from '../../helpers';
 
 
 
 export const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode();
-    const {Categories}= useCategory();
-    
+    const {ItemsData}= useItemsCollection("categories");
+
 
     return (
         <>
@@ -43,8 +44,8 @@ export const Navbar = () => {
                             <Link to={"/Productos"} style={{ margin: '30px' }}>Productos</Link>
                             <Link to={"/Accesorios"} style={{ margin: '30px' }}>Accesorios</Link>
                             <MenuButton as={Link} cursor={"pointer"} style={{margin:30}}>Categorias</MenuButton>
-                            <MenuList height={'300px'} overflowY={'scroll'}>
-                                {Categories.map((category) => (
+                            <MenuList height={'150px'} overflowY={'scroll'}>
+                                {ItemsData.map((category) => (
                                     <MenuItem key={category.slug}>
                                         <Link to={`/Categories/${category.name}`}>
                                             {category.name}
@@ -54,11 +55,13 @@ export const Navbar = () => {
                             </MenuList>
                             <Link style={{ margin: '30px' }}>Contacto</Link>
                         </Menu>
+                        {/* BOTON PARA CARGAR LOS ITEMS A FIRESTORE */}
+                        {/* <Button onClick={() => createProductsFirestore("products")}>Crear Productos</Button> */}
                     </Box>
 
                     <Flex alignItems={'center'}>
                         <Stack direction={'row'} spacing={7}>
-                            <CartWidget> </CartWidget>
+                            <Link to={"/Checkout"}><CartWidget> </CartWidget></Link>
                             <Button onClick={toggleColorMode}>
                                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                             </Button>
@@ -102,3 +105,6 @@ export const Navbar = () => {
     )
 
 };
+
+
+

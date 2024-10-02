@@ -1,37 +1,136 @@
-import {Card, Stack, CardBody, CardFooter, ButtonGroup, Heading, Image, Divider, Text} from "@chakra-ui/react";
-//EN ESTA FUNCION USO COMO PARAMETRO {product} YA QUE TENGO QUE TRAER UN UNICO PRODUCTO, VA ENTRE {} PORQUE ES UN OBJETO EN EL CUAL DEBAJO DEBEMOS ACCEDER A SUS PROPIEDADES
-export const ItemDetailContainer = ({product}) => {
-    console.log(product)
+import { useContext, useState } from "react";
+import {
+    Card,
+    Box,
+    Container,
+    Stack,
+    Heading,
+    CardBody,
+    Image,
+    Text,
+    Flex,
+    VStack,
+    Button,
+    SimpleGrid,
+    StackDivider,
+    useColorModeValue,
+} from "@chakra-ui/react";
+import { CartContext } from "../../context/CartContext";
+
+
+
+
+export const ItemDetailContainer = ({ product }) => {
+    const [showCount, setShowCount] = useState(false);
+    const [count, setCount] = useState(0);
+
+    //TRAEMOS LAS CONSTANTES DEL CONTEXTO PARA AGREGAR O QUITAR PRODUCTOS DEL CARRITO
+    const {AddProduct, RemoveProduct} = useContext(CartContext);
+
+    const handleShowCount = () => {
+        setShowCount(!showCount);
+    };
+    //AQUI LA DE AGREGAR PRODUCTOS AL CARRITO
+    const handleIncrement = () => {
+        if (count <= product.stock){
+            const newCount = count + 1;
+            setCount(newCount);
+            AddProduct(product, newCount);
+        }
+
+    };
+    //AQUI LA DE QUITAR PRODUCTOS DEL CARRITO
+    const handleDecrement = () => {
+        if (count > 0) {
+            const newCount = count - 1;
+            setCount(newCount);
+            RemoveProduct(product, newCount);
+        }
+    };
 
     return (
-        <Card key={product.id} maxW='sm' margin={5}>
-            <CardBody>
-                <Image
-                    src={product.thumbnail}
-                    alt={product.nombre}
-                    borderRadius='lg'
-                />
-                <Stack mt='6' spacing='3'>
-                    <Heading size='md'>{product.title}</Heading>
-                    <Text>
-                        {product.description}
-                    </Text>
-                    <Text color='blue.600' fontSize='2xl'>
-                        {product.precio}
-                    </Text>
-                </Stack>
-            </CardBody>
-            <Divider />
-            <CardFooter>
-                <ButtonGroup spacing='2'>
-                    {/* <Button variant='solid' colorScheme='blue'>
-                        Buy now
+
+        <Container maxW={"7xl"}>
+            <SimpleGrid
+                columns={{ base: 1, lg: 2 }}
+                spacing={{ base: 8, md: 10 }}
+                py={{ base: 18, md: 24 }}
+            >
+                <Flex>
+                    <Image
+                        rounded={"md"}
+                        alt={"product image"}
+                        src={product.thumbnail}
+                        fit={"cover"}
+                        align={"center"}
+                        w={"100%"}
+                        h={{ base: "100%", sm: "400px", lg: "500px" }}
+                    />
+                </Flex>
+                <Stack spacing={{ base: 6, md: 10 }}>
+                    <Box as={"header"}>
+                        <Heading
+                            lineHeight={1.1}
+                            fontWeight={600}
+                            fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+                        >
+                            {product.title}
+                        </Heading>
+                        <Text
+                            color={useColorModeValue("gray.900", "gray.400")}
+                            fontWeight={300}
+                            fontSize={"2xl"}
+                        >
+                            ${product.price} USD
+                        </Text>
+                    </Box>
+
+                    <Stack
+                        spacing={{ base: 4, sm: 6 }}
+                        direction={"column"}
+                        divider={
+                            <StackDivider
+                                borderColor={useColorModeValue("gray.200", "gray.600")}
+                            />
+                        }
+                    >
+                        <VStack spacing={{ base: 4, sm: 6 }}>
+                            <Text
+                                color={useColorModeValue("gray.500", "gray.400")}
+                                fontSize={"2xl"}
+                                fontWeight={"300"}
+                            >
+                                {product.description}
+                            </Text>
+                        </VStack>
+                    </Stack>
+
+                    <Button
+                        rounded={"none"}
+                        w={"full"}
+                        mt={8}
+                        size={"lg"}
+                        py={"7"}
+                        bg={useColorModeValue("gray.900", "gray.50")}
+                        color={useColorModeValue("white", "gray.900")}
+                        textTransform={"uppercase"}
+                        _hover={{
+                            transform: "translateY(2px)",
+                            boxShadow: "lg",
+                        }}
+                        onClick={handleShowCount}
+                    >
+                        Agregar al carrito
                     </Button>
-                    <Button variant='ghost' colorScheme='blue'>
-                        Add to cart
-                    </Button> */}
-                </ButtonGroup>
-            </CardFooter>
-        </Card>
-    )
-}
+                    {showCount && (
+                        <Stack direction="row" spacing={4} align="center" mt={4}>
+                            <Button onClick={handleDecrement}>-</Button>
+                            <Text fontSize="lg">{count}</Text>
+                            <Button onClick={handleIncrement}>+</Button>
+                        </Stack>
+                    )}
+                </Stack>
+            </SimpleGrid>
+        </Container>
+    );
+};

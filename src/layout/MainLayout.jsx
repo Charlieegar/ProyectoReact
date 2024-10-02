@@ -1,5 +1,7 @@
 //EL LAYOUT ES COMO EL PROTOTIPO DE MI PAGINA, AQUI ORGANIZAMOS LA FORMA QUE VA A TENER
 
+import { Footer } from "../components/Footer/Footer";
+
 
 const MainLayout =({children}) => {
     return (
@@ -9,7 +11,7 @@ const MainLayout =({children}) => {
             {/*LOS COMPONENTES DINAMICOS IRIAN DE AQUI*/}
             {children}
             {/*HASTA AQUI*/}
-            <div>Footer a hacer despues</div>
+            <Footer/>
         </div>
     );
 };

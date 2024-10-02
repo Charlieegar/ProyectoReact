@@ -1,13 +1,16 @@
 import { ChakraProvider, Box, Spinner, Flex } from '@chakra-ui/react';
 import MainLayout from "./layout/MainLayout";
 import { MainRouter } from './routes/MainRouter';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
     <ChakraProvider>
-      <MainLayout>
-        <MainRouter />
-      </MainLayout>
+      <CartProvider>
+        <MainLayout>
+          <MainRouter />
+        </MainLayout>
+      </CartProvider>
     </ChakraProvider>
   );
 };
